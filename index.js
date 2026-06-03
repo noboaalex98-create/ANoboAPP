@@ -287,15 +287,19 @@ async function processMessage(msg) {
 // =========================
 
 app.get("/webhook", (req, res) => {
-  const mode      = req.query["hub.mode"];
-  const token     = req.query["hub.verify_token"];
-  const challenge = req.query["hub.challenge"];
+    const mode = req.query["hub.mode"];
+    const token = req.query["hub.verify_token"];
+    const challenge = req.query["hub.challenge"];
 
-  if (mode === "subscribe" && token === process.env.WHATSAPP_VERIFY_TOKEN) {
-    return res.status(200).send(challenge);
-  }
-
-  return res.sendStatus(403);
+    if (mode && token) {
+        if (mode === "subscribe" && token === process.env.WHATSAPP_VERIFY_TOKEN) {
+            console.log("WEBHOOK_VERIFIED");
+            return res.status(200).send(challenge);
+        } else {
+            return res.sendStatus(403);
+        }
+    }
+    return res.sendStatus(400);
 });
 
 // =========================
