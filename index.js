@@ -308,9 +308,9 @@ app.get("/webhook", (req, res) => {
 
 app.post("/webhook", async (req, res) => {
   try {
-    if (!verifySignature(req)) {
-      return res.sendStatus(401);
-    }
+   // if (!verifySignature(req)) {
+    //  return res.sendStatus(401);
+    //}
 
     const msg = req.body?.entry?.[0]?.changes?.[0]?.value?.messages?.[0];
 
