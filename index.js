@@ -8,11 +8,7 @@ const { createClient } = require("@supabase/supabase-js");
 
 const app = express();
 
-app.use(express.json({
-  verify: (req, res, buf) => {
-    req.rawBody = buf;
-  }
-}));
+app.use(express.json());
 
 // =========================
 // INIT
