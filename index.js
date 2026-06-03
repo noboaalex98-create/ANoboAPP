@@ -308,9 +308,17 @@ app.post("/webhook", async (req, res) => {
     //  return res.sendStatus(401);
     //}
 
-    const msg = req.body?.entry?.[0]?.changes?.[0]?.value?.messages?.[0];
+   const entry = req.body?.entry?.[0];
+        const changes = entry?.changes?.[0];
+        const value = changes?.value;
+        const msg = value?.messages?.[0];
 
-    if (!msg) return res.sendStatus(200);
+        if (!msg) {
+            console.log("Webhook recibido pero no contiene un mensaje de texto válido.");
+            return res.sendStatus(200);
+        }
+        
+        console.log("Mensaje de texto detectado:", msg.text?.body || msg);
 
     res.sendStatus(200);
 
